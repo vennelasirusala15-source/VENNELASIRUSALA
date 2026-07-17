@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vennela Sirusala — Field Notes on Supply Chain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F1E4;
+    --paper-deep:#EFE6D2;
+    --ink:#23241F;
+    --olive:#4B5320;
+    --sienna:#A85C32;
+    --wheat:#C9A227;
+    --dusk:#2F4858;
+    --line: rgba(35,36,31,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper); color:var(--ink); font-family:'Inter', sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;} }
+  a{color:inherit;}
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+  .eyebrow{font-family:'IBM Plex Mono', monospace; text-transform:uppercase; letter-spacing:0.14em; font-size:11.5px; color:var(--sienna); font-weight:500;}
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:500; line-height:1.05; letter-spacing:-0.01em;}
+  .serif-italic{font-style:italic; font-weight:400;}
+
+  header.masthead{position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line);}
+  .masthead-inner{display:flex; align-items:center; justify-content:space-between; padding:18px 32px; max-width:1180px; margin:0 auto;}
+  .brand{font-family:'Fraunces', serif; font-size:19px; font-weight:600; letter-spacing:0.01em;}
+  .brand span{color:var(--sienna);}
+  nav ul{list-style:none; display:flex; gap:34px;}
+  nav a{font-family:'IBM Plex Mono', monospace; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; text-decoration:none; color:var(--ink); padding-bottom:3px; border-bottom:1px solid transparent; transition:border-color 0.2s ease, color 0.2s ease;}
+  nav a:hover{border-color:var(--sienna); color:var(--sienna);}
+  .nav-toggle{display:none; background:none; border:none; font-size:22px; cursor:pointer; color:var(--ink);}
+
+  .hero{padding:76px 0 40px; border-bottom:1px solid var(--line);}
+  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:end;}
+  .hero-kicker{margin-bottom:22px;}
+  .hero h1{font-size:clamp(40px, 5.4vw, 74px); max-width:11ch;}
+  .hero-sub{margin-top:22px; max-width:46ch; font-size:17px; color:rgba(35,36,31,0.78);}
+  .hero-actions{margin-top:32px; display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono', monospace; font-size:12.5px; text-transform:uppercase; letter-spacing:0.06em; padding:13px 22px; text-decoration:none; border-radius:2px; transition:transform 0.2s ease, background 0.2s ease;}
+  .btn-primary{background:var(--ink); color:var(--paper);}
+  .btn-primary:hover{background:var(--sienna); transform:translateY(-1px);}
+  .btn-ghost{border:1px solid var(--ink); color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--sienna); color:var(--sienna); transform:translateY(-1px);}
+
+  .photo-slot, .photo{position:relative; overflow:hidden; background:var(--paper-deep);}
+  .photo-slot{border:1.5px dashed rgba(35,36,31,0.35); background:repeating-linear-gradient(135deg, rgba(35,36,31,0.035) 0 2px, transparent 2px 14px), var(--paper-deep); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; color:rgba(35,36,31,0.5); text-align:center; padding:20px;}
+  .photo-slot .cam{font-size:22px; opacity:0.6;}
+  .photo-slot .lbl{font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; max-width:22ch;}
+  .hero .photo{aspect-ratio:4/5; border-radius:2px;}
+  figcaption{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.03em; color:rgba(35,36,31,0.55); margin-top:10px;}
+
+  section{padding:96px 0;}
+  .section-head{display:flex; align-items:baseline; gap:18px; margin-bottom:48px; border-bottom:1px solid var(--line); padding-bottom:20px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,42px);}
+  .section-head .eyebrow{white-space:nowrap;}
+
+  .story{background:var(--paper-deep); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .story-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:start;}
+  .story-grid .photo{aspect-ratio:3/4;}
+  .story-photos{display:grid; grid-template-columns:1fr; gap:18px;}
+  .story-body p{margin-bottom:18px; font-size:16.5px; color:rgba(35,36,31,0.85); max-width:56ch;}
+  .pull{font-family:'Fraunces', serif; font-style:italic; font-weight:400; font-size:23px; line-height:1.4; color:var(--olive); border-left:2px solid var(--wheat); padding-left:22px; margin:30px 0; max-width:44ch;}
+
+  .project-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:34px;}
+  .project-card{border:1px solid var(--line); background:var(--paper); transition:transform 0.2s ease, box-shadow 0.2s ease;}
+  .project-card:hover{transform:translateY(-3px); box-shadow:0 14px 30px -18px rgba(35,36,31,0.35);}
+  .project-card .photo-slot, .project-card .photo{aspect-ratio:16/10; border:none; border-bottom:1.5px dashed rgba(35,36,31,0.28);}
+
+  .project-body{padding:22px 22px 24px;}
+  .project-tag{font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--dusk); margin-bottom:10px; display:block;}
+  .project-body h3{font-size:20px; margin-bottom:8px; font-weight:600;}
+  .project-body p{font-size:14.5px; color:rgba(35,36,31,0.72); margin-bottom:16px;}
+  .project-link{font-family:'IBM Plex Mono', monospace; font-size:12px; text-decoration:none; color:var(--sienna); border-bottom:1px solid var(--sienna); padding-bottom:2px;}
+  .project-link:hover{color:var(--ink); border-color:var(--ink);}
+
+  .journey{background:var(--paper-deep); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .entry{display:grid; grid-template-columns:150px 84px 1fr; gap:24px; padding:26px 0; border-top:1px solid var(--line); align-items:center;}
+  .entry:last-child{border-bottom:1px solid var(--line);}
+  .entry-date{font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--sienna); letter-spacing:0.03em; align-self:start; padding-top:4px;}
+  .entry-thumb{width:84px; height:84px; border-radius:2px; overflow:hidden; background:var(--paper); flex-shrink:0;}
+  .entry-thumb.empty{visibility:hidden;}
+  .entry h3{font-size:19px; margin-bottom:6px; font-weight:600;}
+  .entry p{font-size:14.5px; color:rgba(35,36,31,0.75); max-width:60ch;}
+
+
+
+  .zigzag{display:flex; flex-direction:column; gap:64px;}
+  .zrow{display:flex; align-items:center; gap:56px;}
+  .zrow.rev{flex-direction:row-reverse;}
+  .zphoto{flex:0 0 42%; aspect-ratio:4/3; overflow:hidden; border-radius:2px;}
+  .zphoto img{width:100%; height:100%; object-fit:cover; display:block;}
+  .zphoto-icon{background:var(--paper-deep); border:1px dashed rgba(35,36,31,0.3); display:flex; align-items:center; justify-content:center;}
+  .zphoto-icon span{font-size:38px; color:var(--sienna); opacity:0.7;}
+  .ztext{flex:1;}
+  .zcountry{margin-bottom:14px; display:block;}
+  .zlines p{font-size:15px; line-height:1.6; color:rgba(35,36,31,0.82); margin-bottom:7px; max-width:42ch;}
+  @media (max-width:760px){
+    .zrow, .zrow.rev{flex-direction:column; align-items:stretch; gap:20px;}
+    .zphoto{flex:none; aspect-ratio:16/10;}
+  }
+
+  .zigzag{display:flex; flex-direction:column; gap:70px;}
+  .zz-row{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;}
+  .zz-row.rev{grid-template-columns:1.1fr 0.9fr;}
+  .zz-row.rev .zz-photo{order:2;}
+  .zz-row.rev .zz-text{order:1;}
+  .zz-photo .photo{aspect-ratio:4/3; border-radius:2px;}
+  .zz-text .eyebrow{margin-bottom:10px; display:block;}
+  .zz-text h3{font-size:22px; margin-bottom:12px; font-weight:600;}
+  .zz-text p{font-size:15px; line-height:1.75; color:rgba(35,36,31,0.8); max-width:52ch;}
+  @media (max-width:880px){
+    .zz-row, .zz-row.rev{grid-template-columns:1fr;}
+    .zz-row.rev .zz-photo, .zz-row.rev .zz-text{order:initial;}
+    .zigzag{gap:44px;}
+  }
+
+  .creds{display:grid; grid-template-columns:repeat(2, 1fr); gap:28px;}
+  .cred-card{border:1px solid var(--line); background:var(--paper-deep); display:flex; flex-direction:column;}
+  .cred-card .photo{aspect-ratio:16/10;}
+  .cred-body{padding:18px 20px 22px;}
+  .cred-body h3{font-size:17px; margin-bottom:4px; font-weight:600;}
+  .cred-body p{font-size:13.5px; color:rgba(35,36,31,0.7);}
+
+  footer{padding:90px 0 50px; border-top:1px solid var(--line);}
+  .footer-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:start;}
+  footer h2{font-size:clamp(30px,4vw,48px); margin-bottom:20px;}
+  .contact-list{list-style:none; margin-top:8px;}
+  .contact-list li{margin-bottom:10px; font-family:'IBM Plex Mono', monospace; font-size:13.5px;}
+  .contact-list a{text-decoration:none; border-bottom:1px solid var(--line);}
+  .contact-list a:hover{border-color:var(--sienna); color:var(--sienna);}
+  .foot-meta{margin-top:60px; display:flex; justify-content:space-between; font-family:'IBM Plex Mono', monospace; font-size:11px; color:rgba(35,36,31,0.5); flex-wrap:wrap; gap:10px;}
+
+  @media (max-width:880px){
+    nav{display:none;}
+    .nav-toggle{display:block;}
+    .hero-grid, .story-grid, .footer-grid{grid-template-columns:1fr;}
+    .hero-grid{gap:36px;}
+    .hero .photo{order:-1; aspect-ratio:16/10;}
+    .project-grid{grid-template-columns:1fr 1fr;}
+    .creds{grid-template-columns:1fr;}
+    .entry{grid-template-columns:1fr; gap:12px;}
+    .entry-thumb{width:64px; height:64px;}
+    section{padding:64px 0;}
+  }
+  @media (max-width:560px){
+    .project-grid{grid-template-columns:1fr;}
+    .wrap{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">Vennela <span>Sirusala</span></div>
+    <nav>
+      <ul>
+        <li><a href="#story">Story</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#journey">Journey</a></li>
+        <li><a href="#life">Life</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow hero-kicker">Operations &amp; Supply Chain — Utrecht, NL</div>
+      <h1>From wheat fields to supply chain strategy</h1>
+      <p class="hero-sub">I grew up around agriculture in India and now build order out of supply chains in the Netherlands — reading operations the way a farmer reads a season, and turning messy data into decisions that hold up under pressure.</p>
+      <p class="hero-sub" style="margin-top:14px;">A data-driven Supply Chain &amp; Operations graduate (MSc, TIAS 2025) who builds analytics solutions end-to-end — from SQL databases and Power BI/Tableau dashboards to SAP SD process mapping and export-strategy modelling. Lean Six Sigma Green Belt certified. Seeking a corporate analytics role across supply chain, marketing, SCM, and OSCM.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#work">View the work</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+    <figure class="photo">
+      <img src="assets/headshot.jpg" alt="Portrait of Vennela Sirusala">
+    </figure>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap story-grid">
+    <div class="story-photos">
+      <figure>
+        <div class="photo"><img src="assets/agri-field.jpg" alt="Vennela in the field during her agriculture research"></div>
+        <figcaption>Rooted in the field — sustainability first, always</figcaption>
+      </figure>
+      <figure>
+        <div class="photo"><img src="assets/nursery.jpg" alt="Vennela working in a nursery management setting"></div>
+        <figcaption>Nurturing growth, one seedling at a time</figcaption>
+      </figure>
+    </div>
+    <div class="story-body">
+      <div class="eyebrow" style="margin-bottom:16px;">The story</div>
+      <h2 style="font-size:clamp(26px,3vw,36px); margin-bottom:22px;">Two countries, one way of paying attention</h2>
+      <p>My B.Sc. in Agriculture (Hons) at the College of Agriculture and Allied Sciences, Baramati, took me through agronomy, horticulture, plant pathology, entomology, agro-meteorology, agricultural economics, animal husbandry, and biotechnology — a wide lens on how a field actually works, above and below the soil.</p>
+      <p class="pull">"The earth revolves because of agriculture — it is the past, present, and future."</p>
+      <p>An exchange year at Van Hall Larenstein brought me to the Netherlands and toward the systems that move things from field to shelf. What began as a curiosity about crops became a fascination with supply chains: the networks, the routes, the quiet inefficiencies nobody notices until someone counts them.</p>
+      <p>An MSc in Business Administration (Supply Chain &amp; Operations Management) at TIAS gave that instinct a vocabulary: Lean Six Sigma, root-cause analysis, KPI design, data storytelling. Three-plus years across operations and analytics work later, I still think in the same terms I learned on a farm: what's the season, what's the constraint, and what needs tending first.</p>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Live projects</h2>
+      <span class="eyebrow">Four builds, on GitHub</span>
+    </div>
+    <div class="project-grid">
+
+      <div class="project-card">
+        <div class="photo"><img src="assets/thumb-kpi.png" alt="Supply Chain KPI Dashboard thumbnail"></div>
+        <div class="project-body">
+          <span class="project-tag">Power BI</span>
+          <h3>Supply Chain KPI Dashboard</h3>
+          <p>An interactive Power BI dashboard analysing performance across 4 European distribution centres (~9,800 synthetic orders, 12 months) — a star-schema model with 6 custom DAX measures spanning on-time delivery, fulfilment rate, defect rate, lead time, order value, and inventory turnover.</p>
+          <a class="project-link" href="https://github.com/vennelasirusala15-source/Power-BI-Supply-Chain-Dashboard" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="photo"><img src="assets/thumb-sql.png" alt="Order Fulfilment Analysis thumbnail"></div>
+        <div class="project-body">
+          <span class="project-tag">SQL</span>
+          <h3>Order Fulfilment Analysis</h3>
+          <p>A 5-table normalised database modelling 1,500 orders across 200 customers and 25 products. 8 SQL queries — joins, aggregation, CASE logic — surfaced a 21.2% return rate in Food &amp; Beverage despite it not being the top revenue category.</p>
+          <a class="project-link" href="https://github.com/vennelasirusala15-source/-SQL-Order-Fulfilment-Analysis-" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="photo"><img src="assets/thumb-rfm.png" alt="Customer Segmentation and RFM thumbnail"></div>
+        <div class="project-body">
+          <span class="project-tag">Power BI</span>
+          <h3>Customer Segmentation &amp; RFM</h3>
+          <p>Recency-Frequency-Monetary analysis segmenting 500 customers into six behavioural cohorts from ~3,350 transaction records, informing targeted retention and win-back strategies.</p>
+          <a class="project-link" href="https://github.com/vennelasirusala15-source/marketing-rfm-powerbidashboard" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="photo"><img src="assets/thumb-sap.png" alt="SAP SD Order-to-Cash Case Study thumbnail"></div>
+        <div class="project-body">
+          <span class="project-tag">SAP SD</span>
+          <h3>Order-to-Cash Case Study</h3>
+          <p>Documented the SAP SD Order-to-Cash process end-to-end — sales inquiry through payment clearing — across an 8-step workflow, including transaction codes, master data, and a worked cash-flow example.</p>
+          <a class="project-link" href="https://github.com/vennelasirusala15-source/e-SAP-Order-to-Cash-Case-Study" target="_blank" rel="noopener">View on GitHub →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="mission" style="background:var(--olive); color:var(--paper); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--wheat); margin-bottom:18px;">Motto</div>
+    <h2 style="font-size:clamp(30px,4.2vw,52px); max-width:16ch; color:var(--paper); margin-bottom:44px;">Dream Big. Build Boldly. Lead with Purpose.</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+      <div>
+        <div class="eyebrow" style="color:var(--wheat); margin-bottom:14px;">Vision</div>
+        <p style="font-size:16px; line-height:1.7; color:rgba(247,241,228,0.92); max-width:48ch;">To become a globally recognized entrepreneur who leverages artificial intelligence, business strategy, and sustainable innovation to create impactful solutions that transform industries and improve lives. I aspire to build ventures that drive economic growth while creating lasting social and environmental value.</p>
+      </div>
+      <div>
+        <div class="eyebrow" style="color:var(--wheat); margin-bottom:14px;">Mission</div>
+        <p style="font-size:16px; line-height:1.7; color:rgba(247,241,228,0.92); max-width:48ch;">My mission is to continuously learn, innovate, and apply data-driven insights to solve complex business challenges. Through expertise in business analytics, supply chain, artificial intelligence, and sustainability, I strive to deliver meaningful solutions, inspire innovation, and build the knowledge, leadership, and experience needed to establish successful businesses that create long-term impact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Experience</h2>
+      <span class="eyebrow">Where the work happened</span>
+    </div>
+    <div class="entry" style="border-top:1px solid var(--line);">
+      <div class="entry-date">Nov 2025 – Apr 2026</div>
+      <div class="entry-thumb empty"></div>
+      <div><h3>ALSO Group, via Brave Ones — Operations</h3><p>Nieuwegein, NL. Hands-on with inbound and outbound logistics operations, inventory flow, and order fulfilment — identifying process inefficiencies and adapting quickly across multiple client systems, with an eye for SOP design and compliance.</p></div>
+    </div>
+    <div class="entry">
+      <div class="entry-date">Apr 2023 – Present</div>
+      <div class="entry-thumb empty"></div>
+      <div><h3>Temper — Freelance Operations</h3><p>Netherlands. Logistics, hospitality, and kitchen assignments across multiple industries — building adaptability and independent scheduling across concurrent client environments.</p></div>
+    </div>
+    <div class="entry">
+      <div class="entry-date">Oct 2021 – Nov 2022</div>
+      <div class="entry-thumb empty"></div>
+      <div><h3>Aashman Foundation — Recruiter Intern</h3><p>India. Managed end-to-end recruitment processes, coordinating with hiring managers to align talent acquisition with organisational strategy.</p></div>
+    </div>
+    <div class="entry" style="border-bottom:1px solid var(--line);">
+      <div class="entry-date">Oct 2021 – Jan 2022</div>
+      <div class="entry-thumb empty"></div>
+      <div><h3>Just Agriculture — The Magazine — Business Development Intern</h3><p>India. Identified new business opportunities and built stakeholder relationships to support market growth in the agriculture sector.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="academic-projects" style="background:var(--paper-deep); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head" style="border-color:var(--line);">
+      <h2>Academic projects</h2>
+      <span class="eyebrow">Coursework, applied</span>
+    </div>
+    <div class="project-grid">
+      <div class="project-card" style="background:var(--paper);">
+        <div class="project-body">
+          <span class="project-tag">Export Strategy</span>
+          <h3>Achal Cashews — Export/Import Supply Chain</h3>
+          <p>An end-to-end export–import model for cashew kernels into Germany, sourcing from 5,000+ farmers through processing, logistics, and distribution — PEST/SWOT market selection, trade compliance (Letter of Credit, Incoterms), and KPI monitoring.</p>
+        </div>
+      </div>
+      <div class="project-card" style="background:var(--paper);">
+        <div class="project-body">
+          <span class="project-tag">Feasibility Study</span>
+          <h3>Baker Hilvers — Arnhem Meisjes</h3>
+          <p>Applied the Hardware–Orgware–Software model to assess feasibility of expansion into the Netherlands and UK — value chain analysis, scenario planning, and recommendations on production capacity and market positioning.</p>
+        </div>
+      </div>
+      <div class="project-card" style="background:var(--paper);">
+        <div class="project-body">
+          <span class="project-tag">Market Analysis</span>
+          <h3>Indian FMCG Fruit Juice Sector</h3>
+          <p>PEST and Porter's Five Forces analysis with a 4-level segmentation strategy (geographic, demographic, psychographic, behavioural) across 5 primary segments, proposing a go-to-market strategy for retail, malls, and workplaces.</p>
+        </div>
+      </div>
+      <div class="project-card" style="background:var(--paper);">
+        <div class="project-body">
+          <span class="project-tag">Operations</span>
+          <h3>Van Balen — Production Analysis</h3>
+          <p>Production analysis for a potato chips line — BOM, process flow, JIT/FOQ inventory strategy, critical path analysis, and HACCP-based quality management to identify optimisation opportunities.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="journey" id="journey">
+  <div class="wrap">
+    <div class="section-head" style="border-color:var(--line);">
+      <h2>Field notes</h2>
+      <span class="eyebrow">A working timeline</span>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">India</div>
+      <div class="entry-thumb"><img src="assets/agri-college.jpg" alt="Vennela at the College of Agriculture, Baramati"></div>
+      <div><h3>B.Sc. Agriculture (Hons), Baramati</h3><p>College of Agriculture and Allied Sciences — where the interest in systems, seasons, and yield began.</p></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Aug 2022</div>
+      <div class="entry-thumb"><img src="assets/vhl-flag.jpg" alt="Vennela with the Indian flag at Van Hall Larenstein"></div>
+      <div><h3>Moved to the Netherlands</h3><p>Arrived for an exchange year at Van Hall Larenstein and, soon after, a shift from agriculture toward operations and supply chain.</p></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">2022–23</div>
+      <div class="entry-thumb"><img src="assets/floriade.jpg" alt="Vennela at the Floriade sustainability expo"></div>
+      <div><h3>Van Hall Larenstein — Agribusiness Exchange</h3><p>Including a study trip to Floriade, the sustainability expo, and coursework connecting agriculture to European supply chain thinking.</p></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 2023</div>
+      <div class="entry-thumb"><img src="assets/vhl-grad-sunflower.jpg" alt="Vennela graduating from Van Hall Larenstein"></div>
+      <div><h3>Graduated, Van Hall Larenstein</h3><p>"Building your future-proof world" — VHL's motto, and a fitting note to carry into the next chapter.</p></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jan 2024</div>
+      <div class="entry-thumb"><img src="assets/tias-hoodie-canal.jpg" alt="Vennela starting her MSc at TIAS"></div>
+      <div><h3>Started MSc, TIAS School for Business and Society</h3><p>Business Administration — Supply Chain &amp; Operations Management.</p></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">2024</div>
+      <div class="entry-thumb"><img src="assets/sicily-etna.jpg" alt="Mount Etna, Sicily, during a TIAS field study trip"></div>
+      <div><h3>Field study trip — Sicily &amp; Mount Etna</h3><p>Sustainability in practice, and a look at how landscape shapes economics.</p></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 2024</div>
+      <div class="entry-thumb"><img src="assets/cert-six-sigma.jpg" alt="Lean Six Sigma Green Belt certificate"></div>
+      <div><h3>Lean Six Sigma Green Belt</h3><p>Certified through AIGPE — the toolkit behind the RAWEP efficiency work.</p></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Dec 2025</div>
+      <div class="entry-thumb"><img src="assets/tias-grad-solo.jpg" alt="Vennela graduating from TIAS"></div>
+      <div><h3>Graduated, TIAS — MSc Business Administration</h3><p>GPA 7.5/10. My parents travelled from India to be there — a milestone worth sharing with them.</p></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">2023 –</div>
+      <div class="entry-thumb"><img src="assets/cert-guest-speaker.jpg" alt="Guest speaker certificate of appreciation"></div>
+      <div><h3>Ongoing — Temper &amp; guest speaking</h3><p>Freelance operations work since Apr 2023, alongside guest-speaking on agri-education pathways for Krushishastra Agrotech.</p></div>
+    </div>
+
+  </div>
+</section>
+
+<section id="life">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>The journey, in seven countries</h2>
+      <span class="eyebrow">India · Netherlands · Germany · Italy · Bahrain · Doha · Belgium</span>
+    </div>
+
+    <div class="zigzag">
+
+      <div class="zrow">
+        <div class="zphoto"><img src="assets/agri-college.jpg" alt="Vennela at the College of Agriculture, Baramati, India"></div>
+        <div class="ztext">
+          <div class="eyebrow zcountry">India</div>
+          <div class="zlines">
+            <p>Where the story begins.</p>
+            <p>Raised on the idea that the land teaches patience.</p>
+            <p>A B.Sc. in Agriculture, and a front-row seat to how systems really work.</p>
+            <p>Sustainability wasn't a buzzword here — it was every day.</p>
+            <p>Dream big started in a field in Baramati.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zrow rev">
+        <div class="zphoto"><img src="assets/tias-hoodie-canal.jpg" alt="Vennela by a canal in the Netherlands"></div>
+        <div class="ztext">
+          <div class="eyebrow zcountry">Netherlands</div>
+          <div class="zlines">
+            <p>A new country, a new vocabulary.</p>
+            <p>Traded crop cycles for supply cycles.</p>
+            <p>Built boldly through an exchange year, then a Master's.</p>
+            <p>Learned to read a business the way I once read a season.</p>
+            <p>Utrecht is home base for this chapter.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zrow">
+        <div class="zphoto"><img src="assets/cologne-cathedral.jpg" alt="Vennela with family at Cologne Cathedral, Germany"></div>
+        <div class="ztext">
+          <div class="eyebrow zcountry">Germany</div>
+          <div class="zlines">
+            <p>Cologne, with my parents beside me.</p>
+            <p>Some places remind you why you started.</p>
+            <p>Leading with purpose means bringing people along.</p>
+            <p>A cathedral, a market, a quiet kind of pride.</p>
+            <p>Family first, always — even mid career-chase.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zrow rev">
+        <div class="zphoto"><img src="assets/sicily-etna.jpg" alt="Mount Etna, Sicily, Italy"></div>
+        <div class="ztext">
+          <div class="eyebrow zcountry">Italy</div>
+          <div class="zlines">
+            <p>Sicily, and a volcano that doesn't apologise for its size.</p>
+            <p>A TIAS field trip on sustainability in practice.</p>
+            <p>Mount Etna: proof that disruption can build something new.</p>
+            <p>Dreaming big looks a lot like standing at the edge of one.</p>
+            <p>Sustainability, up close, in the shadow of a live volcano.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zrow">
+        <div class="zphoto zphoto-icon"><span>✈</span></div>
+        <div class="ztext">
+          <div class="eyebrow zcountry">Bahrain</div>
+          <div class="zlines">
+            <p>A layover, not a landing.</p>
+            <p>A few hours between one life and the next.</p>
+            <p>Sometimes the in-between counts too.</p>
+            <p>Every big move has a quiet middle.</p>
+            <p>Building boldly starts with boarding the flight.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zrow rev">
+        <div class="zphoto zphoto-icon"><span>✈</span></div>
+        <div class="ztext">
+          <div class="eyebrow zcountry">Doha</div>
+          <div class="zlines">
+            <p>Another stamp on the way to somewhere new.</p>
+            <p>A short stop, a long journey.</p>
+            <p>Purposeful movement, even in transit.</p>
+            <p>The world got a little smaller with every layover.</p>
+            <p>Small stops, big dreams.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="zrow">
+        <div class="zphoto"><img src="assets/plaza-purple.jpg" alt="Vennela travelling in Belgium"></div>
+        <div class="ztext">
+          <div class="eyebrow zcountry">Belgium</div>
+          <div class="zlines">
+            <p>Cobblestones and a Sunday spent exploring.</p>
+            <p>Weekend trips across Europe, one city at a time.</p>
+            <p>Curiosity is a mission in itself.</p>
+            <p>Building a global perspective, one border at a time.</p>
+            <p>Seven countries in, and still dreaming bigger.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="credentials" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Certifications</h2>
+      <span class="eyebrow">Verified credentials</span>
+    </div>
+    <div class="creds">
+      <div class="cred-card">
+        <div class="photo"><img src="assets/cert-six-sigma.jpg" alt="Lean Six Sigma Green Belt certificate, AIGPE, July 2024"></div>
+        <div class="cred-body"><h3>Lean Six Sigma Green Belt</h3><p>AIGPE, accredited — July 2024, 17.5 hours</p></div>
+      </div>
+      <div class="cred-card">
+        <div class="photo"><img src="assets/cert-guest-speaker.jpg" alt="Certificate of appreciation for guest speaking"></div>
+        <div class="cred-body"><h3>Guest Speaker, Krushishastra Agrotech</h3><p>"Unlocking Global Agri-Education Pathways: Exploring Overseas Opportunities"</p></div>
+      </div>
+      <div class="cred-card">
+        <div class="photo-slot"><span class="cam">◎</span><span class="lbl">Add certificate image</span></div>
+        <div class="cred-body"><h3>Basics of Strategic Management</h3><p>IBMI — May 2024</p></div>
+      </div>
+    </div>
+
+    <div style="margin-top:56px; display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+      <div>
+        <div class="eyebrow" style="margin-bottom:16px;">Languages</div>
+        <ul class="contact-list" style="display:flex; flex-direction:column; gap:8px;">
+          <li>English — Professional (C1)</li>
+          <li>Dutch — C1</li>
+          <li>Telugu — Native (C2)</li>
+          <li>Hindi — Fluent (C1)</li>
+        </ul>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:16px;">Key skills</div>
+        <p style="font-size:14px; color:rgba(35,36,31,0.78); margin-bottom:10px;"><strong>Analytics &amp; Tools:</strong> Power BI (DAX, data modelling), SQL/SQLite, Tableau, SAP SD, Python (pandas), Advanced Excel, SPSS</p>
+        <p style="font-size:14px; color:rgba(35,36,31,0.78); margin-bottom:10px;"><strong>Strategy &amp; Research:</strong> PEST, SWOT, Porter's Five Forces, Market Segmentation, Feasibility Analysis, KPI Development, Value Chain Analysis</p>
+        <p style="font-size:14px; color:rgba(35,36,31,0.78);"><strong>Supply Chain &amp; Operations:</strong> Supply Chain Strategy, Procurement, Inventory Management (JIT, FOQ), Incoterms, Trade Compliance, HACCP, Lean Six Sigma</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="eyebrow" style="margin-bottom:16px;">Get in touch</div>
+      <h2>Let's talk supply chains<span class="serif-italic">,</span> or sustainability<span class="serif-italic">,</span> or both.</h2>
+    </div>
+    <div>
+      <ul class="contact-list">
+        <li>Email — <a href="mailto:vennelasirusala15@gmail.com">vennelasirusala15@gmail.com</a></li>
+        <li>Phone — <a href="tel:+31639092902">+31 6 39092902</a></li>
+        <li>LinkedIn — <a href="https://www.linkedin.com/in/vennela-sirusala-8001bb216/" target="_blank" rel="noopener">/in/vennela-sirusala</a></li>
+        <li>GitHub — <a href="https://github.com/VENNELASIRUSALA" target="_blank" rel="noopener">@VENNELASIRUSALA</a></li>
+        <li>Based in Utrecht, Netherlands</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot-meta">
+    <span>© 2026 Vennela Sirusala</span>
+    <span>Field notes on operations, supply chain, and everything upstream of it.</span>
+  </div>
+</footer>
+
+</body>
+</html>
